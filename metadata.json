@@ -1,0 +1,8 @@
+{
+  "name": "Atelier Monge — Proiezioni Ortogonali 3D",
+  "description": "Laboratorio interattivo 3D per imparare le proiezioni ortogonali nella scuola secondaria di primo grado.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
