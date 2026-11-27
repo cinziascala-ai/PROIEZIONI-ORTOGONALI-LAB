@@ -15,7 +15,7 @@ export interface BoxPartSpec {
   color: string;
   roughness: number;
   metalness: number;
-  kind?: 'box' | 'gable';
+  kind?: 'box' | 'gable' | 'pyramid';
 }
 
 export interface Point2D {
@@ -101,3 +101,67 @@ export interface GridPuzzle {
   /** Optional 3D solid blocks on the gridSize x gridSize x gridSize voxel space for 3D preview */
   voxels: Array<[number, number, number]>;
 }
+
+export interface VertexLabel2D {
+  text: string;
+  plane: PlaneKey;
+  u: number;
+  v: number;
+  dx?: number;
+  dy?: number;
+}
+
+export interface ConstructionStepLayers {
+  axes: boolean;
+  poConstruction: boolean;
+  poFill: boolean;
+  verticalRays: boolean;
+  pvFill: boolean;
+  compassAndHorizontals: boolean;
+  plFill: boolean;
+  labelsAndDims: boolean;
+}
+
+export interface ConstructionStep {
+  stepNumber: number;
+  title: string;
+  pencil: '2H (leggera)' | 'HB (spigoli)' | 'Compasso';
+  instruction: string;
+  tip: string;
+  layers: ConstructionStepLayers;
+}
+
+export interface ExerciseSheetSolid {
+  id: string;
+  name: string;
+  subtitle: string;
+  description: string;
+  solid: SolidDefinition;
+  vertexLabels: VertexLabel2D[];
+  steps: ConstructionStep[];
+}
+
+export interface AssociationOption {
+  id: string;
+  label: string;
+  projections: {
+    PV: PlaneProjection2D;
+    PO: PlaneProjection2D;
+    PL: PlaneProjection2D;
+  };
+  constructionXs: number[];
+  constructionYs: number[];
+  ribaltamentoDepths: number[];
+  isCorrect: boolean;
+  feedback: string;
+}
+
+export interface AssociationExercise {
+  id: string;
+  title: string;
+  focusTag: string;
+  prompt: string;
+  solid: SolidDefinition;
+  options: AssociationOption[];
+}
+

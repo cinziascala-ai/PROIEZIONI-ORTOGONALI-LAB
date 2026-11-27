@@ -56,6 +56,45 @@ function buildGableRoofGeometry(
   return geo;
 }
 
+function buildSquarePyramidGeometry(
+  xMin: number,
+  xMax: number,
+  yMin: number,
+  yMax: number,
+  zMin: number,
+  zMax: number,
+): THREE.BufferGeometry {
+  const xMid = (xMin + xMax) / 2;
+  const zMid = (zMin + zMax) / 2;
+
+  // Base corners at yMin
+  const p0 = [xMin, yMin, zMin];
+  const p1 = [xMax, yMin, zMin];
+  const p2 = [xMax, yMin, zMax];
+  const p3 = [xMin, yMin, zMax];
+  const apex = [xMid, yMax, zMid];
+
+  // Unindexed triangles with outward CCW winding for crisp flat normals
+  const vertices = new Float32Array([
+    // Base (facing -Y)
+    ...p0, ...p1, ...p2,
+    ...p0, ...p2, ...p3,
+    // Front (+Z)
+    ...p3, ...p2, ...apex,
+    // Right (+X)
+    ...p2, ...p1, ...apex,
+    // Back (-Z)
+    ...p1, ...p0, ...apex,
+    // Left (-X)
+    ...p0, ...p3, ...apex,
+  ]);
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+  geo.computeVertexNormals();
+  return geo;
+}
+
 function disposeGroup(obj: THREE.Object3D) {
   obj.traverse((child) => {
     const mesh = child as THREE.Mesh;
@@ -186,6 +225,9 @@ export const GameObject3DViewer: React.FC<GameObject3DViewerProps> = ({ solid, c
         let geo: THREE.BufferGeometry;
         if (p.kind === 'gable') {
           geo = buildGableRoofGeometry(p.xMin, p.xMax, p.yMin, p.yMax, p.zMin, p.zMax);
+          geo.translate(-cx, -minY, -cz);
+        } else if (p.kind === 'pyramid') {
+          geo = buildSquarePyramidGeometry(p.xMin, p.xMax, p.yMin, p.yMax, p.zMin, p.zMax);
           geo.translate(-cx, -minY, -cz);
         } else {
           const sx = p.xMax - p.xMin;

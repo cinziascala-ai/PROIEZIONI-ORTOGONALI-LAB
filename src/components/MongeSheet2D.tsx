@@ -99,9 +99,9 @@ export const MongeSheet2D: React.FC<MongeSheet2DProps> = ({
         <rect x="16" y={origin} width={origin - 16} height={origin - 16} fill="#F0F9FF" fillOpacity="0.32" />
         <rect x={origin} y="16" width={origin - 16} height={origin - 16} fill="#FFFBEB" fillOpacity="0.32" />
 
-        {/* Construction lines (only between visible planes) */}
+        {/* Construction lines (light continuous 2H lines between visible planes) */}
         {showConstruction && (
-          <g stroke="#94A3B8" strokeWidth="1" strokeDasharray="3 3" opacity="0.8">
+          <g stroke="#94A3B8" strokeWidth="0.85" opacity="0.68">
             {/* Vertical lines between PO and PV */}
             {showPV &&
               showPO &&
@@ -117,7 +117,7 @@ export const MongeSheet2D: React.FC<MongeSheet2DProps> = ({
                     x2={xPx}
                     y2={botY}
                     stroke={highlightAxis === 'width' ? '#0284C7' : '#94A3B8'}
-                    strokeWidth={highlightAxis === 'width' ? 1.5 : 1}
+                    strokeWidth={highlightAxis === 'width' ? 1.25 : 0.85}
                   />
                 );
               })}
@@ -137,7 +137,7 @@ export const MongeSheet2D: React.FC<MongeSheet2DProps> = ({
                     x2={rightX}
                     y2={yPx}
                     stroke={highlightAxis === 'height' ? '#059669' : '#94A3B8'}
-                    strokeWidth={highlightAxis === 'height' ? 1.5 : 1}
+                    strokeWidth={highlightAxis === 'height' ? 1.25 : 0.85}
                   />
                 );
               })}
@@ -152,7 +152,7 @@ export const MongeSheet2D: React.FC<MongeSheet2DProps> = ({
                 const plX = origin + r;
                 const plTopY = origin - maxY * scale;
                 const arcStroke = highlightAxis === 'depth' ? '#D97706' : '#94A3B8';
-                const arcWidth = highlightAxis === 'depth' ? 1.6 : 1;
+                const arcWidth = highlightAxis === 'depth' ? 1.25 : 0.85;
                 return (
                   <g key={`cz-${zVal}`} stroke={arcStroke} strokeWidth={arcWidth}>
                     <line x1={leftX} y1={poY} x2={origin} y2={poY} />

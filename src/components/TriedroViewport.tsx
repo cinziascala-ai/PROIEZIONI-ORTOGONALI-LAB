@@ -518,38 +518,30 @@ export const TriedroViewport: React.FC<TriedroViewportProps> = ({
         plContent.add(line);
       });
 
-      // 5. Projection Rays from 3D vertices to PV, PO, PL
-      const rayMatPV = new THREE.LineDashedMaterial({ color: '#059669', dashSize: 0.1, gapSize: 0.08, transparent: true, opacity: 0.55 });
-      const rayMatPO = new THREE.LineDashedMaterial({ color: '#0284C7', dashSize: 0.1, gapSize: 0.08, transparent: true, opacity: 0.55 });
-      const rayMatPL = new THREE.LineDashedMaterial({ color: '#D97706', dashSize: 0.1, gapSize: 0.08, transparent: true, opacity: 0.55 });
+      // 5. Projection Rays from 3D vertices to PV, PO, PL (light continuous 2H lines)
+      const rayMatPV = new THREE.LineBasicMaterial({ color: '#059669', transparent: true, opacity: 0.42 });
+      const rayMatPO = new THREE.LineBasicMaterial({ color: '#0284C7', transparent: true, opacity: 0.42 });
+      const rayMatPL = new THREE.LineBasicMaterial({ color: '#D97706', transparent: true, opacity: 0.42 });
 
       s.projectionVertices.forEach(([vx, vy, vz]) => {
         // Ray to PV (z = 0)
         const gPV = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(vx, vy, vz), new THREE.Vector3(vx, vy, 0)]);
-        const lPV = new THREE.Line(gPV, rayMatPV);
-        lPV.computeLineDistances();
-        raysGroup.add(lPV);
+        raysGroup.add(new THREE.Line(gPV, rayMatPV));
 
         // Ray to PO (y = 0)
         const gPO = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(vx, vy, vz), new THREE.Vector3(vx, 0, vz)]);
-        const lPO = new THREE.Line(gPO, rayMatPO);
-        lPO.computeLineDistances();
-        raysGroup.add(lPO);
+        raysGroup.add(new THREE.Line(gPO, rayMatPO));
 
         // Ray to PL (x = 0)
         const gPL = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(vx, vy, vz), new THREE.Vector3(0, vy, vz)]);
-        const lPL = new THREE.Line(gPL, rayMatPL);
-        lPL.computeLineDistances();
-        raysGroup.add(lPL);
+        raysGroup.add(new THREE.Line(gPL, rayMatPL));
       });
 
-      // 6. Quadrant 4 Compass Ribaltamento Arcs & Sheet Construction Lines
-      const constrMat = new THREE.LineDashedMaterial({
+      // 6. Quadrant 4 Compass Ribaltamento Arcs & Sheet Construction Lines (light continuous 2H lines)
+      const constrMat = new THREE.LineBasicMaterial({
         color: '#64748B',
-        dashSize: 0.1,
-        gapSize: 0.08,
         transparent: true,
-        opacity: 0.6,
+        opacity: 0.45,
       });
 
       const minX = Math.min(...s.constructionXs);
@@ -561,9 +553,7 @@ export const TriedroViewport: React.FC<TriedroViewportProps> = ({
           new THREE.Vector3(cx, -maxZ, 0.012),
           new THREE.Vector3(cx, maxY, 0.012),
         ]);
-        const line = new THREE.Line(g, constrMat);
-        line.computeLineDistances();
-        ribaltamentoGroup.add(line);
+        ribaltamentoGroup.add(new THREE.Line(g, constrMat));
       });
 
       s.constructionYs.forEach((cy) => {
@@ -571,9 +561,7 @@ export const TriedroViewport: React.FC<TriedroViewportProps> = ({
           new THREE.Vector3(minX, cy, 0.012),
           new THREE.Vector3(maxZ, cy, 0.012),
         ]);
-        const line = new THREE.Line(g, constrMat);
-        line.computeLineDistances();
-        ribaltamentoGroup.add(line);
+        ribaltamentoGroup.add(new THREE.Line(g, constrMat));
       });
 
       s.ribaltamentoDepths.forEach((r) => {
@@ -582,9 +570,7 @@ export const TriedroViewport: React.FC<TriedroViewportProps> = ({
           new THREE.Vector3(minX, -r, 0.012),
           new THREE.Vector3(0, -r, 0.012),
         ]);
-        const l1 = new THREE.Line(g1, constrMat);
-        l1.computeLineDistances();
-        ribaltamentoGroup.add(l1);
+        ribaltamentoGroup.add(new THREE.Line(g1, constrMat));
 
         // Quarter-circle compass arc in Quadrant 4 (from -90 deg to 0 deg)
         const curvePts: THREE.Vector3[] = [];
@@ -594,7 +580,7 @@ export const TriedroViewport: React.FC<TriedroViewportProps> = ({
           curvePts.push(new THREE.Vector3(Math.cos(ang) * r, Math.sin(ang) * r, 0.012));
         }
         const gArc = new THREE.BufferGeometry().setFromPoints(curvePts);
-        const lArc = new THREE.Line(gArc, new THREE.LineBasicMaterial({ color: '#D97706', transparent: true, opacity: 0.75 }));
+        const lArc = new THREE.Line(gArc, new THREE.LineBasicMaterial({ color: '#D97706', transparent: true, opacity: 0.65 }));
         ribaltamentoGroup.add(lArc);
 
         // Vertical PL line rising from LT
@@ -602,9 +588,7 @@ export const TriedroViewport: React.FC<TriedroViewportProps> = ({
           new THREE.Vector3(r, 0, 0.012),
           new THREE.Vector3(r, maxY, 0.012),
         ]);
-        const l2 = new THREE.Line(g2, constrMat);
-        l2.computeLineDistances();
-        ribaltamentoGroup.add(l2);
+        ribaltamentoGroup.add(new THREE.Line(g2, constrMat));
       });
     };
 

@@ -515,9 +515,9 @@ export const GuidedActivitySection: React.FC = () => {
                 {/* Ribaltamento Quadrant */}
                 <div className="pl-3 pt-3 flex items-center justify-center">
                   <svg viewBox="0 0 100 100" className="w-full h-full max-w-[110px]">
-                    <path d="M 0 22 A 22 22 0 0 0 22 0" fill="none" stroke="#CBD5E1" strokeDasharray="3 3" strokeWidth="1.5" />
-                    <path d="M 0 54 A 54 54 0 0 0 54 0" fill="none" stroke="#CBD5E1" strokeDasharray="3 3" strokeWidth="1.5" />
-                    <path d="M 0 86 A 86 86 0 0 0 86 0" fill="none" stroke="#CBD5E1" strokeDasharray="3 3" strokeWidth="1.5" />
+                    <path d="M 0 22 A 22 22 0 0 0 22 0" fill="none" stroke="#94A3B8" strokeWidth="1" opacity="0.65" />
+                    <path d="M 0 54 A 54 54 0 0 0 54 0" fill="none" stroke="#94A3B8" strokeWidth="1" opacity="0.65" />
+                    <path d="M 0 86 A 86 86 0 0 0 86 0" fill="none" stroke="#94A3B8" strokeWidth="1" opacity="0.65" />
                     <text x="12" y="94" className="fill-slate-400 text-[9px] font-mono">
                       1 blocco = 2 cm
                     </text>

@@ -8,6 +8,8 @@ import { GuidedActivitySection } from './components/GuidedActivitySection';
 import { GuessObjectGame } from './components/GuessObjectGame';
 import { TeacherGuideSection } from './components/TeacherGuideSection';
 import { CompetencyQuizSection } from './components/CompetencyQuizSection';
+import { StepByStepSheetSection } from './components/StepByStepSheetSection';
+import { ProjectionAssociationGame } from './components/ProjectionAssociationGame';
 
 export default function App() {
   const [selectedSolidId, setSelectedSolidId] = useState<string>(SOLIDS[0].id);
@@ -29,19 +31,19 @@ export default function App() {
             Atelier Monge
           </a>
 
-          {/* Zone 2: 4 concise single-line nav links */}
+          {/* Zone 2: 5 concise single-line nav links */}
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
-            <a href="#obiettivi" className="hover:text-slate-900 transition-colors whitespace-nowrap shrink-0">
-              A Cosa Servono
-            </a>
             <a href="#laboratorio" className="hover:text-slate-900 transition-colors whitespace-nowrap shrink-0">
               Laboratorio 3D
+            </a>
+            <a href="#schede-solidi" className="hover:text-slate-900 transition-colors whitespace-nowrap shrink-0">
+              Schede Solidi
             </a>
             <a href="#esempio-guidato" className="hover:text-slate-900 transition-colors whitespace-nowrap shrink-0">
               Attività Pratica
             </a>
-            <a href="#guida-classe" className="hover:text-slate-900 transition-colors whitespace-nowrap shrink-0">
-              Guida Docente
+            <a href="#associazione-proiezioni" className="hover:text-slate-900 transition-colors whitespace-nowrap shrink-0">
+              Associazione
             </a>
             <a href="#verifica-competenze" className="hover:text-slate-900 transition-colors whitespace-nowrap shrink-0">
               Verifica
@@ -150,11 +152,17 @@ export default function App() {
         {/* Objective 1 & 2: Why orthogonal projections matter */}
         <WhyProjectionsSection />
 
+        {/* Step-by-step guided construction sheets: Cubo, Parallelepipedo, Piramide */}
+        <StepByStepSheetSection />
+
         {/* Objective 3 (Part A): Guided Example + Hands-On 3D Build */}
         <GuidedActivitySection />
 
         {/* Objective 3 (Part B): "Indovina l'Oggetto" Game (Sedia, Tavolo, Libro) */}
         <GuessObjectGame />
+
+        {/* 3D Object to Orthogonal Projection Association Game (6 distinct exercises) */}
+        <ProjectionAssociationGame />
 
         {/* Classroom & Teacher Guide */}
         <TeacherGuideSection />
